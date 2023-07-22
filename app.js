@@ -21,6 +21,10 @@ const {
 } = require('./celebrate/celebrateUser');
 const PageNotFound = require('./exceptions/pageNotFound');
 const { pageNotFound } = require('./utils/validationMessage');
+const {
+  requestLogger,
+  errorLogger,
+} = require('./middlewares/logger');
 
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
@@ -33,7 +37,7 @@ const allowedCors = [
   'localhost:3000',
 ];
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {});
+mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {});
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -56,6 +60,7 @@ app.use((req, res, next) => {
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(requestLogger);
 
 app.post('/signin', celebrateLogin, login);
 app.post('/signup', celebrateCreateUser, createUser);
@@ -65,6 +70,7 @@ app.use(auth);
 app.use('/users', userRouter);
 app.use('/movies', movieRouter);
 app.use('*', (req, res, next) => next(new PageNotFound(pageNotFound)));
+app.use(errorLogger);
 app.use(errors());
 app.use(handleExceptions);
 

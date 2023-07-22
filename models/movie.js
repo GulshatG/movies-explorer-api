@@ -82,4 +82,4 @@ const movieSchema = new mongoose.Schema({
     maxLength: 30,
   },
 }, { versionKey: false });
-module.exports = mongoose.model('card', movieSchema);
+module.exports = mongoose.model('movie', movieSchema);

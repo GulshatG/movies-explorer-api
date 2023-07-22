@@ -9,6 +9,9 @@ module.exports = (err, req, res, next) => {
     || err instanceof mongoose.Error.CastError) {
     res.status(400)
       .send({ message: err.message });
+  } else if (err.code === 11000) {
+    res.status(409)
+      .send({ message: 'Email already exist' });
   } else {
     res.status(err.statusCode || 500)
       .send({ message: err.message });

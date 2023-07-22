@@ -11,13 +11,6 @@ const {
 module.exports.celebrateCreateMovie = celebrate({
   body: Joi.object()
     .keys({
-      name: Joi.string()
-        .required()
-        .min(2)
-        .max(30),
-      link: Joi.string()
-        .required()
-        .regex(regexUrl),
       country: Joi.string()
         .required()
         .min(2)
@@ -50,12 +43,18 @@ module.exports.celebrateCreateMovie = celebrate({
         .required()
         .min(2)
         .max(30)
-        .regex(matchRU),
+        .regex(matchRU)
+        .messages({
+          'string.pattern.base': 'Имя должно быть на русском.',
+        }),
       nameEN: Joi.string()
         .required()
         .min(2)
         .max(30)
-        .regex(matchEN),
+        .regex(matchEN)
+        .messages({
+          'string.pattern.base': 'Name must be on english',
+        }),
     }),
 });
 module.exports.celebrateMovieById = celebrate({
