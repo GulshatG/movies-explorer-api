@@ -27,7 +27,10 @@ const {
 } = require('./middlewares/logger');
 
 // Слушаем 3000 порт
-const { PORT = 3000 } = process.env;
+const {
+  PORT = 3000,
+  DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb',
+} = process.env;
 
 const app = express();
 
@@ -37,7 +40,7 @@ const allowedCors = [
   'localhost:3000',
 ];
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {});
+mongoose.connect(DB_URL, {});
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
