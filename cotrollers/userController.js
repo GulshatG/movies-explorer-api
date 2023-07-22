@@ -15,7 +15,11 @@ const {
 function findUserById(userId, res, next) {
   User.findById(userId)
     .orFail()
-    .then((data) => handleOkStatus(data, res))
+    .then((user) => {
+      const userObj = user.toObject();
+      delete userObj._id;
+      return handleOkStatus(userObj, res, 200);
+    })
     .catch(next);
 }
 
@@ -40,7 +44,11 @@ module.exports.updateProfile = (req, res, next) => {
     runValidators: true,
   })
     .orFail()
-    .then((data) => handleOkStatus(data, res))
+    .then((user) => {
+      const userObj = user.toObject();
+      delete userObj._id;
+      return handleOkStatus(userObj, res, 200);
+    })
     .catch(next);
 };
 
@@ -68,6 +76,7 @@ module.exports.login = (req, res, next) => {
         });
         const userObj = user.toObject();
         delete userObj.password;
+        delete userObj._id;
         return res.send(userObj);
       }))
     .catch(next);
