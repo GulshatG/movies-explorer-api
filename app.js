@@ -35,8 +35,8 @@ const {
 const app = express();
 
 const allowedCors = [
-  'http://api.gulshat-movie.nomoredomains.xyz',
-  'https://api.gulshat-movie.nomoredomains.xyz',
+  'http://gulshat-movie.nomoreparties.co',
+  'https://gulshat-movie.nomoreparties.co',
   'http://localhost:3000',
   'http://localhost:3001',
 ];
