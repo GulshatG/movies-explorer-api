@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const ValidationMessage = require('../utils/validationMessage');
 const {
   regexUrl,
-  matchRU,
-  matchEN,
 } = require('../utils/regex');
 
 const movieSchema = new mongoose.Schema({
@@ -11,13 +9,11 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     minLength: 2,
-    maxLength: 30,
   },
   director: {
     type: String,
     required: true,
     minLength: 2,
-    maxLength: 30,
   },
   duration: {
     type: Number,
@@ -70,16 +66,12 @@ const movieSchema = new mongoose.Schema({
   nameRU: {
     type: String,
     required: true,
-    match: matchRU,
     minLength: 2,
-    maxLength: 30,
   },
   nameEN: {
     type: String,
     required: true,
-    match: matchEN,
     minLength: 2,
-    maxLength: 30,
   },
 }, { versionKey: false });
 module.exports = mongoose.model('movie', movieSchema);

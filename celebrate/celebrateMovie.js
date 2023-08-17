@@ -4,8 +4,6 @@ const {
 } = require('celebrate');
 const {
   regexUrl,
-  matchRU,
-  matchEN,
 } = require('../utils/regex');
 
 module.exports.celebrateCreateMovie = celebrate({
@@ -13,12 +11,10 @@ module.exports.celebrateCreateMovie = celebrate({
     .keys({
       country: Joi.string()
         .required()
-        .min(2)
-        .max(30),
+        .min(2),
       director: Joi.string()
         .required()
-        .min(2)
-        .max(30),
+        .min(2),
       duration: Joi.number()
         .required(),
       year: Joi.string()
@@ -41,20 +37,10 @@ module.exports.celebrateCreateMovie = celebrate({
         .integer(),
       nameRU: Joi.string()
         .required()
-        .min(2)
-        .max(30)
-        .regex(matchRU)
-        .messages({
-          'string.pattern.base': 'Имя должно быть на русском.',
-        }),
+        .min(2),
       nameEN: Joi.string()
         .required()
-        .min(2)
-        .max(30)
-        .regex(matchEN)
-        .messages({
-          'string.pattern.base': 'Name must be on english',
-        }),
+        .min(2),
     }),
 });
 module.exports.celebrateMovieById = celebrate({
