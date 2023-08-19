@@ -31,8 +31,20 @@ module.exports.createUser = (req, res, next) => {
       password: hashPassword,
     })
       .then((user) => {
+        const token = jwt.sign(
+          { _id: user._id },
+          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+          { expiresIn: '7d' },
+        );
+        res.cookie('token', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: 'none',
+          secure: true,
+        });
         const userObj = user.toObject();
         delete userObj.password;
+        delete userObj._id;
         return handleOkStatus(userObj, res, 201);
       }))
     .catch((err) => next(err.code === 11000 ? new EmailExist(emailExist) : err));
